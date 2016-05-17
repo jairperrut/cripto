@@ -82,9 +82,7 @@ public class MensageiroImpl extends UnicastRemoteObject implements Mensageiro {
              gravaF.setPriority(Thread.MAX_PRIORITY);
              gravaF.start();
              //System.out.println("Gravando na " + nomeFilaG + " Mensagem " + MSG);
-             //return "Servidor - Mensagem gravada na: " + nomeFilaP;
-             byte[] teste; 
-             return teste;
+             return Cripto_Server.encriptaSim(("Servidor - Mensagem gravada na: " + nomeFilaP).getBytes(), chaveSim);
              }
           }
     
@@ -94,16 +92,16 @@ public class MensageiroImpl extends UnicastRemoteObject implements Mensageiro {
      * @return mensagem de exclusão.
      */
     @Override
-       public byte[]String deletaFila(byte[] nomeFilaG){
+       public byte[] deletaFila(byte[] nomeFilaG){
            synchronized(this){
              String nomeFilaP = new String(Cripto_Server.decriptaSim(nomeFilaG,chaveSim));
              if (filamsg.containsKey(nomeFilaP)){
                  filamsg.remove(nomeFilaP);
                  System.out.println("Servidor - " + nomeFilaP + " Excluída com sucesso!");
-                 return "Servidor - " + nomeFilaP + " Excluída com sucesso!";
+                 return Cripto_Server.encriptaSim(("Servidor - " + nomeFilaP + " Excluída com sucesso!").getBytes(), chaveSim);
              } else {
                  System.out.println("Servidor - " + nomeFilaP + " Não EXISTE!");
-                 return "Servidor - " + nomeFilaP + " Não EXISTE!";                 
+                 return Cripto_Server.encriptaSim(("Servidor - " + nomeFilaP + " Não EXISTE!").getBytes(), chaveSim);                 
              }
            }
        }
@@ -117,7 +115,7 @@ public class MensageiroImpl extends UnicastRemoteObject implements Mensageiro {
     @Override
     public PublicKey getChavePub() throws RemoteException {
         try {
-            return Cripto_Server.getPublicKeyFromFile();
+            return Cripto_Server.getPubKeyRSA();
         } catch (Exception ex) {
             Logger.getLogger(MensageiroImpl.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -134,7 +132,7 @@ public class MensageiroImpl extends UnicastRemoteObject implements Mensageiro {
     
     public boolean gravaChaveSim(byte[] chaveSimetrica) {
         try {
-            PrivateKey chavepriv = Cripto_Server.getPrivateKeyFromFile();
+            PrivateKey chavepriv = Cripto_Server.getPrivKeyRSA();
             chaveSim = Cripto_Server.decripta(chaveSimetrica,chavepriv);
             return true;           
         } catch (Exception ex) {

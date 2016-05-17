@@ -58,7 +58,7 @@ public class MensageiroCliente {
                                 mensagem = " MSG nr: " + k;
                                 byte[] msgCript = Cripto_Cliente.encriptaSim(mensagem.getBytes(),chs);
                                 byte[] nomeFilaC = Cripto_Cliente.encriptaSim(nomeFila.getBytes(),chs);
-                                System.out.println(msgs.gravaFila(nomeFilaC, msgCript));
+                                System.out.println(Cripto_Cliente.decriptaSim(msgs.gravaFila(nomeFilaC, msgCript), chs));
                             }
                         }
                          //

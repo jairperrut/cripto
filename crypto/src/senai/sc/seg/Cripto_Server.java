@@ -34,8 +34,8 @@ public class Cripto_Server {
        public static File certFile = new File("c:/CTAI/Tecnica_Seguranca_Redes/Ferramentas_e_Programas/assdigital_v3/certificados.jks");
        private static final String alias = "cert_1"; 
        private static final String pwd = "senha";
-       private PrivateKey privKey = null;
-       private PublicKey pubKey = null;
+       private static PrivateKey privKey = null;
+       private static PublicKey pubKey = null;
        public Cripto_Server(){
      }
     
@@ -99,7 +99,7 @@ public class Cripto_Server {
     	try{
 	    	KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 	    	keyGen.initialize(2048);
-	    	KeyPair pair = KeyGen.genKeyPair();
+	    	KeyPair pair = keyGen.genKeyPair();
 	    	privKey = pair.getPrivate();
 	    	pubKey = pair.getPublic();
 	    	
@@ -118,7 +118,7 @@ public class Cripto_Server {
      */
     public static byte[] encriptaSim(byte[] textoP, byte[] chaveS){
          try {
-             Cipher cifra = Cipher.getInstance("AES/CBC/PKCS5Padding");
+             Cipher cifra = Cipher.getInstance("Blowfish");
              IvParameterSpec ivspec = new IvParameterSpec (new byte[16]);
              cifra.init(Cipher.ENCRYPT_MODE, new SecretKeySpec (chaveS,"AES"),ivspec);
              return cifra.doFinal(textoP);
@@ -136,7 +136,7 @@ public class Cripto_Server {
      */
     public static byte[] decriptaSim(byte[] textoC, byte[] chaveSeg){
          try {
-             Cipher cifra = Cipher.getInstance("AES/CBC/PKCS5Padding");
+             Cipher cifra = Cipher.getInstance("Blowfish");
              IvParameterSpec ivspec = new IvParameterSpec (new byte[16]);             
              cifra.init(Cipher.DECRYPT_MODE, new SecretKeySpec (chaveSeg,"AES"),ivspec);
              return cifra.doFinal(textoC);             
@@ -147,11 +147,11 @@ public class Cripto_Server {
          }
      }
 
-	public PrivateKey getPrivKeyRSA() {
+	public static PrivateKey getPrivKeyRSA() {
 		return privKey;
 	}
 
-	public PublicKey getPubKeyRSA() {
+	public static PublicKey getPubKeyRSA() {
 		return pubKey;
 	}
     
