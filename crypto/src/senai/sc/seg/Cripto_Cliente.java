@@ -48,9 +48,9 @@ public class Cripto_Cliente {
      */   
     public static byte[] encriptaSim(byte[] textoP, byte[] chaveS){
          try {
-             Cipher cifra = Cipher.getInstance("AES/CBC/PKCS5Padding");
-             IvParameterSpec ivspec = new IvParameterSpec (new byte[16]);
-             cifra.init(Cipher.ENCRYPT_MODE, new SecretKeySpec (chaveS,"AES"),ivspec);
+             Cipher cifra = Cipher.getInstance("Blowfish");
+             IvParameterSpec ivspec = new IvParameterSpec (new byte[256]);
+             cifra.init(Cipher.ENCRYPT_MODE, new SecretKeySpec (chaveS,"Blowfish"));
              return cifra.doFinal(textoP);
          } 
          catch (Exception ex){
@@ -66,9 +66,9 @@ public class Cripto_Cliente {
     */
    public static byte[] decriptaSim(byte[] textoC, byte[] chaveSeg){
          try {
-             Cipher cifra = Cipher.getInstance("AES/CBC/PKCS5Padding");
-             IvParameterSpec ivspec = new IvParameterSpec (new byte[16]);
-             cifra.init(Cipher.DECRYPT_MODE, new SecretKeySpec (chaveSeg,"AES"),ivspec);
+             Cipher cifra = Cipher.getInstance("Blowfish");
+             IvParameterSpec ivspec = new IvParameterSpec (new byte[256]);
+             cifra.init(Cipher.DECRYPT_MODE, new SecretKeySpec (chaveSeg,"Blowfish"));
              return cifra.doFinal(textoC);             
          } 
          catch (Exception ex){
@@ -84,7 +84,7 @@ public class Cripto_Cliente {
      * @throws NoSuchAlgorithmException 
      */   
     public static byte[] getChaveSimetrica() throws NoSuchAlgorithmException {
-        KeyGenerator keygen = KeyGenerator.getInstance("AES");
+        KeyGenerator keygen = KeyGenerator.getInstance("Blowfish");
         keygen.init(128);
         SecretKey chaveSim = keygen.generateKey();
         if (chaveSim instanceof SecretKey){

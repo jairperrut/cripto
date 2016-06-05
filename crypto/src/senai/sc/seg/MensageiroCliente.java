@@ -22,7 +22,7 @@ public class MensageiroCliente {
         private static String nomeFila = "";
         private static String mensagem = "";
         private static ArrayList listaMensagens = new ArrayList();
-        private static int nrfilas = 1000;
+        private static int nrfilas = 100;
         private static int nrmsg = 10;
         private static byte[] chs = null;
         private static PublicKey pubKey = null;
@@ -58,7 +58,7 @@ public class MensageiroCliente {
                                 mensagem = " MSG nr: " + k;
                                 byte[] msgCript = Cripto_Cliente.encriptaSim(mensagem.getBytes(),chs);
                                 byte[] nomeFilaC = Cripto_Cliente.encriptaSim(nomeFila.getBytes(),chs);
-                                System.out.println(Cripto_Cliente.decriptaSim(msgs.gravaFila(nomeFilaC, msgCript), chs));
+                                System.out.println(new String(Cripto_Cliente.decriptaSim(msgs.gravaFila(nomeFilaC, msgCript), chs)));
                             }
                         }
                          //
@@ -85,7 +85,7 @@ public class MensageiroCliente {
                         for (int k=1;k<=nrfilas;k++){
                             nomeFila = "Fila Mensagens [" + k + "]";
                             byte[] nomeFilaC = Cripto_Cliente.encriptaSim(nomeFila.getBytes(),chs);
-                            System.out.println("Excluíndo: " + nomeFila + " " + msgs.deletaFila(nomeFilaC));
+                            System.out.println("Excluíndo: " + nomeFila + " " + new String(Cripto_Server.decriptaSim(msgs.deletaFila(nomeFilaC),chs)));
                         }
                       } else {
                          System.out.println("Erro ao enviar chave simétrica ao servidor!");

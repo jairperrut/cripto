@@ -36,8 +36,10 @@ public class Cripto_Server {
        private static final String pwd = "senha";
        private static PrivateKey privKey = null;
        private static PublicKey pubKey = null;
+      
        public Cripto_Server(){
-     }
+    	   
+       }
     
 	/**
      Método que decripta dados, encriptados pela chave Pública
@@ -119,8 +121,7 @@ public class Cripto_Server {
     public static byte[] encriptaSim(byte[] textoP, byte[] chaveS){
          try {
              Cipher cifra = Cipher.getInstance("Blowfish");
-             IvParameterSpec ivspec = new IvParameterSpec (new byte[16]);
-             cifra.init(Cipher.ENCRYPT_MODE, new SecretKeySpec (chaveS,"AES"),ivspec);
+             cifra.init(Cipher.ENCRYPT_MODE, new SecretKeySpec (chaveS,"Blowfish"));
              return cifra.doFinal(textoP);
          } 
          catch (Exception ex){
@@ -137,8 +138,8 @@ public class Cripto_Server {
     public static byte[] decriptaSim(byte[] textoC, byte[] chaveSeg){
          try {
              Cipher cifra = Cipher.getInstance("Blowfish");
-             IvParameterSpec ivspec = new IvParameterSpec (new byte[16]);             
-             cifra.init(Cipher.DECRYPT_MODE, new SecretKeySpec (chaveSeg,"AES"),ivspec);
+             IvParameterSpec ivspec = new IvParameterSpec (new byte[256]);             
+             cifra.init(Cipher.DECRYPT_MODE, new SecretKeySpec (chaveSeg,"Blowfish"));
              return cifra.doFinal(textoC);             
          } 
          catch (Exception ex){

@@ -32,6 +32,7 @@ public class MensageiroImpl extends UnicastRemoteObject implements Mensageiro {
 	private MensageiroImpl() throws RemoteException {
 	    super();
 	    Cripto_Server cripto = new Cripto_Server();
+	    cripto.gerarChaveRSA();
 	    pubKey = cripto.getPubKeyRSA();
 	    privKey = cripto.getPrivKeyRSA();
  	}
